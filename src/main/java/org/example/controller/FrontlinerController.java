@@ -21,8 +21,8 @@ public class FrontlinerController {
     public ResponseEntity postMessage(@RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
         try{
-//            String result = messageProcess.process(body);
             if(body.containsKey("message")) {
+                String result = messageProcess.process(body);
                 System.out.println(body.get("message"));
                 response.put("status", "Success");
                 response.put("message", "Message Sent Successfully");
@@ -32,7 +32,8 @@ public class FrontlinerController {
 //            if(!result.equals("OK")) throw new Exception();
         } catch(Exception e) {
             response.put("status", "Failed");
-            response.put("message", "Message failed");
+            response.put("message", e.getMessage());
+            e.printStackTrace();
         }
         return new ResponseEntity(response, HttpStatus.OK);
     }
